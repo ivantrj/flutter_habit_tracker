@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_import, implementation_imports, unused_import
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -7,9 +9,9 @@ import '../models/habit_model.dart';
 import 'home_page.dart';
 
 class HabitEditor extends StatefulWidget {
-  Habit? habit;
+  final Habit? habit;
 
-  HabitEditor({this.habit, super.key});
+  const HabitEditor({this.habit, super.key});
 
   @override
   State<HabitEditor> createState() => _HabitEditorState();
@@ -18,9 +20,9 @@ class HabitEditor extends StatefulWidget {
 class _HabitEditorState extends State<HabitEditor> {
   @override
   Widget build(BuildContext context) {
-    TextEditingController _habitTitle = TextEditingController(
+    TextEditingController habitTitle = TextEditingController(
         text: widget.habit != null ? widget.habit!.title : null);
-    TextEditingController _habitDescription = TextEditingController(
+    TextEditingController habitDescription = TextEditingController(
         text: widget.habit != null ? widget.habit!.description : null);
 
     return Scaffold(
@@ -44,11 +46,11 @@ class _HabitEditorState extends State<HabitEditor> {
               "Habit Title",
               style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold),
             ),
-            SizedBox(
+            const SizedBox(
               height: 12.0,
             ),
             TextField(
-              controller: _habitTitle,
+              controller: habitTitle,
               decoration: InputDecoration(
                 fillColor: Colors.blue.shade100.withAlpha(75),
                 filled: true,
@@ -59,11 +61,11 @@ class _HabitEditorState extends State<HabitEditor> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 12.0,
             ),
             TextField(
-              controller: _habitDescription,
+              controller: habitDescription,
               keyboardType: TextInputType.multiline,
               minLines: 5,
               maxLines: 25,
@@ -80,21 +82,21 @@ class _HabitEditorState extends State<HabitEditor> {
             Expanded(
               child: Align(
                 alignment: FractionalOffset.bottomCenter,
-                child: Container(
+                child: SizedBox(
                   width: double.infinity,
                   height: 60.0,
                   child: ElevatedButton(
                     onPressed: () {
                       var newHabit = Habit(
-                        title: _habitTitle.text,
-                        description: _habitDescription.text,
+                        title: habitTitle.text,
+                        description: habitDescription.text,
                         creationDate: DateTime.now(),
                         done: false,
                       );
                       Box<Habit> habitsBox = Hive.box<Habit>("habits");
                       if (widget.habit != null) {
-                        widget.habit!.title = _habitTitle.text;
-                        widget.habit!.description = _habitDescription.text;
+                        widget.habit!.title = habitTitle.text;
+                        widget.habit!.description = habitDescription.text;
                         widget.habit!.creationDate = DateTime.now();
                         widget.habit!.done = false;
                         widget.habit!.save();
