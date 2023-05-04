@@ -15,7 +15,11 @@ class Habit {
 
   Habit({required this.title, this.description, this.creationDate, this.done});
 
-  void save() {}
+  void save() {
+    Hive.box<Habit>('habits').put(title, this);
+  }
 
-  void delete() {}
+  void delete() {
+    Hive.box<Habit>('habits').delete(this);
+  }
 }

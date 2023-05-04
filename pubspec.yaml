@@ -38,6 +38,8 @@ dependencies:
   hive_flutter:
   path_provider:
   date_format:
+  flutter_slidable: ^3.0.0
+  flutter_heatmap_calendar: ^1.0.5
 
 dev_dependencies:
   flutter_test:
