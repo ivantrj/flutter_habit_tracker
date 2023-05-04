@@ -20,15 +20,17 @@ class HabitTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(20.0),
+      padding: const EdgeInsets.fromLTRB(20, 0, 20, 12),
       child: Slidable(
+        closeOnScroll: true,
         endActionPane: ActionPane(
+          extentRatio: 0.4,
           motion: const StretchMotion(),
           children: [
             // settings option
             SlidableAction(
               onPressed: settingsTapped,
-              backgroundColor: Colors.grey.shade800,
+              backgroundColor: Colors.orange,
               icon: Icons.settings,
               borderRadius: BorderRadius.circular(12),
             ),

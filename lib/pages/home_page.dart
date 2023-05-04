@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../data/habit_database.dart';
@@ -50,45 +51,57 @@ class _HomePageState extends State<HomePage> {
   final _newHabitDescriptionController = TextEditingController();
   Widget createNewHabit() {
     // show alert dialog for user to enter the new habit details
-    return CupertinoButton(
-      onPressed: () {
-        showCupertinoDialog(
-          context: context,
-          builder: (context) {
-            return CupertinoAlertDialog(
-              title: Text('New Habit'),
-              content: Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: Column(
-                    children: [
-                      CupertinoTextField(
-                        controller: _newHabitNameController,
-                        placeholder: 'Enter habit name..',
-                      ),
-                      const SizedBox(
-                        height: 12.0,
-                      ),
-                      CupertinoTextField(
-                        controller: _newHabitDescriptionController,
-                        placeholder: 'Enter habit description..',
-                      ),
-                    ],
-                  )),
-              actions: [
-                CupertinoDialogAction(
-                  child: Text('Cancel'),
-                  onPressed: cancelDialogBox,
-                ),
-                CupertinoDialogAction(
-                  child: Text('Save'),
-                  onPressed: saveNewHabit,
-                ),
-              ],
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+        PlatformTextButton(
+          onPressed: () {
+            showCupertinoDialog(
+              context: context,
+              builder: (context) {
+                return PlatformAlertDialog(
+                  title: Text('New Habit'),
+                  content: Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: Column(
+                        children: [
+                          CupertinoTextField(
+                            controller: _newHabitNameController,
+                            placeholder: 'Enter habit name..',
+                          ),
+                          const SizedBox(
+                            height: 12.0,
+                          ),
+                          CupertinoTextField(
+                            controller: _newHabitDescriptionController,
+                            placeholder: 'Enter habit description..',
+                          ),
+                        ],
+                      )),
+                  actions: [
+                    PlatformDialogAction(
+                      child: Text('Cancel'),
+                      onPressed: cancelDialogBox,
+                    ),
+                    PlatformDialogAction(
+                      child: Text('Save'),
+                      onPressed: saveNewHabit,
+                    ),
+                  ],
+                );
+              },
             );
           },
-        );
-      },
-      child: Text('Create New Habit'),
+          child: Text(
+            'Create New Habit',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      ],
     );
   }
 
@@ -151,7 +164,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.grey[300],
+        backgroundColor: Colors.black26,
         body: ListView(
           children: [
             // monthly summary heat map
