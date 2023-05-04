@@ -1,79 +1,66 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:flutter_habit_tracker/pages/habit_editor.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
-import '../models/habit_model.dart';
+class HabitTile extends StatelessWidget {
+  final String habitName;
+  final bool habitCompleted;
+  final Function(bool?)? onChanged;
+  final Function(BuildContext)? settingsTapped;
+  final Function(BuildContext)? deleteTapped;
 
-class HabitTile extends StatefulWidget {
-  Habit habit;
-  int? index;
+  const HabitTile({
+    super.key,
+    required this.habitName,
+    required this.habitCompleted,
+    required this.onChanged,
+    required this.settingsTapped,
+    required this.deleteTapped,
+  });
 
-  HabitTile({required this.habit, this.index, super.key});
-
-  @override
-  State<HabitTile> createState() => _HabitTileState();
-}
-
-class _HabitTileState extends State<HabitTile> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12.0),
-      width: double.infinity,
-      padding: const EdgeInsets.all(12.0),
-      decoration: BoxDecoration(
-        color: Colors.blue.shade50,
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Slidable(
+        endActionPane: ActionPane(
+          motion: const StretchMotion(),
+          children: [
+            // settings option
+            SlidableAction(
+              onPressed: settingsTapped,
+              backgroundColor: Colors.grey.shade800,
+              icon: Icons.settings,
+              borderRadius: BorderRadius.circular(12),
+            ),
+
+            // delete option
+            SlidableAction(
+              onPressed: deleteTapped,
+              backgroundColor: Colors.red.shade400,
+              icon: Icons.delete,
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ],
+        ),
+        child: Container(
+          padding: EdgeInsets.all(24),
+          decoration: BoxDecoration(
+            color: Colors.grey[100],
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Row(
             children: [
-              Expanded(
-                child: Text(
-                  widget.habit.title!,
-                  style: const TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+              // checkbox
+              Checkbox(
+                value: habitCompleted,
+                onChanged: onChanged,
               ),
-              IconButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              HabitEditor(habit: widget.habit)));
-                },
-                icon: const Icon(
-                  Icons.edit,
-                  color: Colors.green,
-                ),
-              ),
-              IconButton(
-                onPressed: () {
-                  widget.habit.delete();
-                },
-                icon: const Icon(
-                  Icons.delete,
-                  color: Colors.red,
-                ),
-              ),
+
+              // habit name
+              Text(habitName),
             ],
           ),
-          const Divider(
-            color: Colors.black87,
-            height: 20.0,
-            thickness: 1.0,
-          ),
-          Text(
-            widget.habit.description!,
-            style: TextStyle(fontSize: 16.0),
-          ),
-        ],
+        ),
       ),
     );
   }
