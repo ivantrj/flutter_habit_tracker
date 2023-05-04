@@ -5,7 +5,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_habit_tracker/widgets/habit_tile.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'add_habit_view.dart';
+import 'habit_editor.dart';
 
 import '../main.dart';
 import '../models/habit_model.dart';
@@ -80,7 +80,7 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(context,
-              MaterialPageRoute(builder: ((context) => AddHabitView())));
+              MaterialPageRoute(builder: ((context) => HabitEditor())));
         },
         child: const Icon(Icons.add),
       ),

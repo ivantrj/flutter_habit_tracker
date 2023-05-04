@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_habit_tracker/pages/habit_editor.dart';
 
 import '../models/habit_model.dart';
 
@@ -40,14 +41,22 @@ class _HabitTileState extends State<HabitTile> {
                 ),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              HabitEditor(habit: widget.habit)));
+                },
                 icon: const Icon(
                   Icons.edit,
                   color: Colors.green,
                 ),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  widget.habit.delete();
+                },
                 icon: const Icon(
                   Icons.delete,
                   color: Colors.red,

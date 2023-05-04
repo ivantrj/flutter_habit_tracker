@@ -14,4 +14,8 @@ class Habit {
   bool? done;
 
   Habit({required this.title, this.description, this.creationDate, this.done});
+
+  void save() {}
+
+  void delete() {}
 }
