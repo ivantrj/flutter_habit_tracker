@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -46,18 +47,48 @@ class _HomePageState extends State<HomePage> {
 
   // create a new habit
   final _newHabitNameController = TextEditingController();
-  void createNewHabit() {
+  final _newHabitDescriptionController = TextEditingController();
+  Widget createNewHabit() {
     // show alert dialog for user to enter the new habit details
-    showDialog(
-      context: context,
-      builder: (context) {
-        return MyAlertBox(
-          controller: _newHabitNameController,
-          hintText: 'Enter habit name..',
-          onSave: saveNewHabit,
-          onCancel: cancelDialogBox,
+    return CupertinoButton(
+      onPressed: () {
+        showCupertinoDialog(
+          context: context,
+          builder: (context) {
+            return CupertinoAlertDialog(
+              title: Text('New Habit'),
+              content: Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Column(
+                    children: [
+                      CupertinoTextField(
+                        controller: _newHabitNameController,
+                        placeholder: 'Enter habit name..',
+                      ),
+                      const SizedBox(
+                        height: 12.0,
+                      ),
+                      CupertinoTextField(
+                        controller: _newHabitDescriptionController,
+                        placeholder: 'Enter habit description..',
+                      ),
+                    ],
+                  )),
+              actions: [
+                CupertinoDialogAction(
+                  child: Text('Cancel'),
+                  onPressed: cancelDialogBox,
+                ),
+                CupertinoDialogAction(
+                  child: Text('Save'),
+                  onPressed: saveNewHabit,
+                ),
+              ],
+            );
+          },
         );
       },
+      child: Text('Create New Habit'),
     );
   }
 
@@ -89,7 +120,7 @@ class _HomePageState extends State<HomePage> {
     showDialog(
       context: context,
       builder: (context) {
-        return MyAlertBox(
+        return AlertBox(
           controller: _newHabitNameController,
           hintText: db.todaysHabitList[index][0],
           onSave: () => saveExistingHabit(index),
@@ -120,33 +151,32 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
-      floatingActionButton: FloatingActionButton(onPressed: createNewHabit),
-      body: ListView(
-        children: [
-          // monthly summary heat map
-          MonthlySummary(
-            datasets: db.heatMapDataSet,
-            startDate: _myBox.get("START_DATE"),
-          ),
+        backgroundColor: Colors.grey[300],
+        body: ListView(
+          children: [
+            // monthly summary heat map
+            MonthlySummary(
+              datasets: db.heatMapDataSet,
+              startDate: _myBox.get("START_DATE"),
+            ),
 
-          // list of habits
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: db.todaysHabitList.length,
-            itemBuilder: (context, index) {
-              return HabitTile(
-                habitName: db.todaysHabitList[index][0],
-                habitCompleted: db.todaysHabitList[index][1],
-                onChanged: (value) => checkBoxTapped(value, index),
-                settingsTapped: (context) => openHabitSettings(index),
-                deleteTapped: (context) => deleteHabit(index),
-              );
-            },
-          )
-        ],
-      ),
-    );
+            // list of habits
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: db.todaysHabitList.length,
+              itemBuilder: (context, index) {
+                return HabitTile(
+                  habitName: db.todaysHabitList[index][0],
+                  habitCompleted: db.todaysHabitList[index][1],
+                  onChanged: (value) => checkBoxTapped(value, index),
+                  settingsTapped: (context) => openHabitSettings(index),
+                  deleteTapped: (context) => deleteHabit(index),
+                );
+              },
+            )
+          ],
+        ),
+        bottomNavigationBar: SafeArea(child: createNewHabit()));
   }
 }

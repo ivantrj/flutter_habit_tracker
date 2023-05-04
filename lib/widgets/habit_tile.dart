@@ -20,7 +20,7 @@ class HabitTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(20.0),
       child: Slidable(
         endActionPane: ActionPane(
           motion: const StretchMotion(),
@@ -34,14 +34,11 @@ class HabitTile extends StatelessWidget {
             ),
 
             // delete option
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SlidableAction(
-                onPressed: deleteTapped,
-                backgroundColor: Colors.red.shade400,
-                icon: Icons.delete,
-                borderRadius: BorderRadius.circular(12),
-              ),
+            SlidableAction(
+              onPressed: deleteTapped,
+              backgroundColor: Colors.red.shade400,
+              icon: Icons.delete,
+              borderRadius: BorderRadius.circular(12),
             ),
           ],
         ),

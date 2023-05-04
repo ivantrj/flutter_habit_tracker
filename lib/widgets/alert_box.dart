@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class MyAlertBox extends StatelessWidget {
+class AlertBox extends StatelessWidget {
   final controller;
   final String hintText;
   final VoidCallback onSave;
   final VoidCallback onCancel;
 
-  const MyAlertBox({
+  const AlertBox({
     super.key,
     required this.controller,
     required this.hintText,
