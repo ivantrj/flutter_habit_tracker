@@ -17,8 +17,8 @@ class HabitAdapter extends TypeAdapter<Habit> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Habit(
-      title: fields[0] as String?,
-      description: fields[1] as String?,
+      title: fields[0] as String,
+      description: fields[1] as String,
       creationDate: fields[2] as DateTime?,
       done: fields[3] as bool?,
     );

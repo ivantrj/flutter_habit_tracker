@@ -5,7 +5,7 @@ part 'habit_model.g.dart';
 @HiveType(typeId: 0)
 class Habit {
   @HiveField(0)
-  String? title;
+  String title;
   @HiveField(1)
   String? description;
   @HiveField(2)
@@ -13,5 +13,5 @@ class Habit {
   @HiveField(3)
   bool? done;
 
-  Habit({this.title, this.description, this.creationDate, this.done});
+  Habit({required this.title, this.description, this.creationDate, this.done});
 }
